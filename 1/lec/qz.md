@@ -18,3 +18,13 @@ mvt, расшифровка 	model view template
 * добавляем допустимые хосты  	в settings.py добавляем ALLOWED_HOSTS = [192.168.1.184]
 * создаём новое приложение 	python manage.py startapp app_name
 * добавляем приложение в проект 	в settings.py: INSTALLED_APPS = [ app_name ]
+* импортируем реализацию веб-страницы 	from django.http import HttpResponse
+* простейший маршрут 	def index(request):  return Httpresponse("Hellow")
+* что принимает вью функция 	запрос от пользователя(request)
+* импортируем машршрут 	from django.urls import path
+* пример маршрута 	urlpatterns = [path('link/',app_name.module_name.func_name)]
+* что делает django.urls.include 	перехватывает адрес и отдаёт его в приложение 	path('',include(my_app.urls))
+* структура url.py в рамках проекта 	в приложениях хардлинки внутри urls.py; в головном (проектном) urls. py - path("link/",include(app_name.urls)
+* пример маршрута в приложении 	urlpatterns = [path('from_main_project/',app_views.func_view,name="route_name")]
+где описываем логирование 	setting.py  >> LOGGING:dict
+* разворачиваем логирование 	import logging  logger = logging.getLogger(__name__)
