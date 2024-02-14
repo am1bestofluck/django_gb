@@ -28,3 +28,7 @@ mvt, расшифровка 	model view template
 * пример маршрута в приложении 	urlpatterns = [path('from_main_project/',app_views.func_view,name="route_name")]
 где описываем логирование 	setting.py  >> LOGGING:dict
 * разворачиваем логирование 	import logging  logger = logging.getLogger(__name__)
+#
+* порядок описания логирования formatters, handlers, loggers
+* что куда ложится в логировании formatters в handlers, handlers в loggers
+* как в приложении вызвать логгер из проекта    logger=logging.getLogger(__name__)
