@@ -1,8 +1,11 @@
+import pdb
 from typing import Callable
 import logging
 from django.shortcuts import render, HttpResponse
+from django.http import JsonResponse
 
 from random import choice
+from .models import CoinLogger
 
 # Create your views here.
 logger = logging.getLogger(__name__)
@@ -23,7 +26,10 @@ def from_sample(population: int):
 
 @caller_deco
 def coin(request):
-    return HttpResponse(from_sample(2))
+    result = from_sample(2)
+    coin_itm = CoinLogger(result=result)
+    coin_itm.save()
+    return HttpResponse(result)
 
 
 @caller_deco
@@ -34,3 +40,9 @@ def dice(request):
 @caller_deco
 def assassination(request):
     return HttpResponse(from_sample(100))
+
+
+def get_coins(request, qua):
+    itms = CoinLogger.get_newest(qua)
+    # pdb.set_trace()
+    return JsonResponse(data=itms, safe=False)
