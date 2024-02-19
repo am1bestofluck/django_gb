@@ -38,14 +38,14 @@ class GetAllCommentsOnArticle(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pdb.set_trace()
+        # pdb.set_trace()
         art_id = kwargs['article_id']
         article = get_object_or_404(Article,pk=art_id)
         context['title']: str = f"Comments on '{article.title}'"
         context['details'] = dict()
         context['details']['title']: str = article.title
         context['details']['content']: str = article.content
-        context['comment']: QuerySet[Comment] = Comment.objects.filter(article_id__exact=art_id)
+        context['comments']: QuerySet[Comment] = Comment.objects.filter(article_id__exact=art_id)
 
-        pdb.set_trace()
+        # pdb.set_trace()
         return context

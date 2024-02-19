@@ -3,6 +3,7 @@ from typing import Callable
 import logging
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
+from django.views.generic import View
 
 from random import choice
 from .models import CoinLogger
@@ -32,6 +33,11 @@ def coin(request):
     return HttpResponse(result)
 
 
+def coin_no_deco(request):
+    result = from_sample(2)
+    # coin_itm = CoinLogger(result=result)
+    # coin_itm.save()
+    return HttpResponse(result)
 @caller_deco
 def dice(request):
     return HttpResponse(from_sample(6))
@@ -46,3 +52,24 @@ def get_coins(request, qua):
     itms = CoinLogger.get_newest(qua)
     # pdb.set_trace()
     return JsonResponse(data=itms, safe=False)
+
+
+def throw_all_coins(request, qua):
+    throws = {True: 0, False: 0}
+
+    for i in range(qua):
+        throws[bool(int(coin(request).content))] += 1
+    return "boring."
+
+
+class ThrowAllCoins(View):
+    template_name = "app2_randoms/many_coins.html"
+
+    def get(self, request, **kwargs):
+        # pdb.set_trace()
+        qua = kwargs['qua']
+        context = {'title': f'Throw {qua} coins! Such a waste!', "result": {True: 0, False: 0}}
+
+        for i in range(qua):
+            context['result'][bool(int(coin_no_deco(request).content))] += 1
+        return render(request, self.template_name, {"context": context})
