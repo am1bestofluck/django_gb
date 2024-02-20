@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         qua = kwargs['qua']
-        pdb.set_trace()
+        # pdb.set_trace()
         for n_ware in range(qua):
             ware = Ware()
             ware.save()

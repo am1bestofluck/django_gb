@@ -43,4 +43,7 @@ class Order(Model):
     client = ForeignKey(Client, on_delete=DO_NOTHING)
     wares = ManyToManyField(Ware, default=[], blank=True)
     total = IntegerField(default=0)  # формула тут, переопределить save.Но в тз не сказали.
-    date_locked = DateField(auto_now=True)
+    date_locked = DateField()
+
+    def __str__(self):
+        return f"Order #{self.pk} from {self.date_locked}"
