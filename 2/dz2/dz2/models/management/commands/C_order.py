@@ -5,7 +5,7 @@ from models.models import Client, Ware, Order
 
 
 class Command(BaseCommand):
-    help = "рандомим qua клиентов"
+    help = "рандомим заказы [id клиента] [через пробел товары в заказе]"
 
     def add_arguments(self, parser):
         # Positional arguments
@@ -13,9 +13,9 @@ class Command(BaseCommand):
         parser.add_argument("ware_ids", type=int, nargs="*")
 
     def handle(self, *args, **kwargs):
-        client: Client = Client.objects.filter(pk=kwargs['cli_id']).first()
+        client: Client = Client.objects.get(pk=kwargs['cli_id'])
         wares = kwargs["ware_ids"]
-        pdb.set_trace()
+        # pdb.set_trace()
         wares_list = [Ware.objects.filter(pk=i).first() for i in wares]
         total = sum([i.price for i in wares_list])
         if None in wares_list:
