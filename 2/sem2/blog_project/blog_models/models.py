@@ -1,5 +1,6 @@
 from django.db.models import (Model, CharField, EmailField, TextField,
-                              DateField, DateTimeField, ForeignKey, CASCADE, IntegerField, DO_NOTHING, SET_NULL)
+                              DateField, DateTimeField, ForeignKey, CASCADE, IntegerField, DO_NOTHING, SET_NULL,
+                              BooleanField, Field)
 from datetime import datetime, timedelta
 from random import choice
 from django.utils import lorem_ipsum
@@ -45,6 +46,7 @@ class Article(Model):
     author = ForeignKey(Author, on_delete=CASCADE)
     tags = CharField(max_length=100, default=lorem_ipsum.words(count=3, common=False))
     views = IntegerField(default=0)
+    isPublished = BooleanField(default=True)
 
     def __ge__(self, other):
         return self.pk >= other.pk
@@ -58,15 +60,18 @@ class Article(Model):
     def __str__(self):
         return f"{self.__class__.__name__} '{self.title}' #{self.pk}, author: {self.author.full_name}, published at {self.publication_date}"
 
+    def intro(self):
+        return " ".join(self.content.split()[:10]) + "..."
+
 
 class Comment(Model):
     author: Author = ForeignKey(Author, on_delete=DO_NOTHING)
-    article:Article = ForeignKey(Article, on_delete=DO_NOTHING)
+    article: Article = ForeignKey(Article, on_delete=DO_NOTHING)
     content = TextField(default=lorem_ipsum.words(count=20, common=False))
     date_created = DateTimeField(
         default=(datetime.now()
                  - timedelta(weeks=4 * choice(range(1, 4)))).strftime("%Y-%m-%d %H:%M"))
-    date_edited = DateField(auto_now_add=True)
+    date_edited = DateField(auto_now_add=True, null=True)
 
     def __ge__(self, other):
         return self.pk >= other.pk

@@ -13,7 +13,7 @@ class Command(BaseCommand):
         parser.add_argument("qua", type=int)  # nargs="+" - собирает аргументы в список
 
     def handle(self, *args, **kwargs):
-        # pdb.set_trace()
+        pdb.set_trace()
         qua = kwargs['qua']
         authors = [*Author.objects.all()]
         articles = [*Article.objects.all()]
