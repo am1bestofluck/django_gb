@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block title__verbose %} {{ title__verbosed }} {% endblock %}
+{% block content %}
+<div class="periods">
+    <div class="period"><h2>Previous week:</h2>{% for item,value in week.items %} {{ item }}: {{value}}<br> {% endfor %}</div>
+    <div class="period"><h2>Previous month:</h2>{% for item,value in month.items %} {{ item }}: {{value}}<br> {% endfor %}</div>
+    <div class="period"><h2>Previous year:</h2>{% for item,value in year.items %} {{ item }}: {{value}}<br> {% endfor %}</div>
+</div>{% endblock %}

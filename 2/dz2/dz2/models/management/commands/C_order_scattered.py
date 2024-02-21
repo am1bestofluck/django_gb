@@ -30,6 +30,10 @@ class Command(BaseCommand):
         purchase_event[50].extend([12, 13])
         purchase_event[52] = deepcopy(purchase_event[22])
         purchase_event[52].extend([14, 15])
+        purchase_event[500] = deepcopy(purchase_event[50])
+        purchase_event[500].extend([16, 17])
+        purchase_event[502] = deepcopy(purchase_event[52])
+        purchase_event[502].extend([18, 19])
         # pdb.set_trace()
         client: Client = Client.objects.get(pk=1)
         for timedelta_ in purchase_event:

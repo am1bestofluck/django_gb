@@ -1,0 +1,39 @@
+.title__verbose {
+    padding: 5 svh 0;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: rgb(31, 34, 44);
+    color: rgb(243, 210, 219);
+    /* font-size: larger; */
+}
+
+.periods {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.period {
+    margin-top: 2svh;
+    width: 100%;
+    background-color: rgb(55, 67, 108);
+    ;
+}
+
+h2 {
+    text-align: center;
+    font-size: larger;
+}
