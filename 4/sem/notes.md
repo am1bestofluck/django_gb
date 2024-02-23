@@ -21,4 +21,30 @@ if request.method =="POST:
     form.save()
     return HttpResponse("ok") 
 
-54!
+* зацикливаем форму(создали > вернулись к форме)  def add_stuff(request): 
+  ...
+  form.save()
+  return redirect('add_stuff')
+* в модели через ModelForm добавляем все поля кроме указанных   class SomeForm(forms.ModelForm):
+  class Meta:
+    model=FromModels
+    exclude=['this_field']
+* в модели через ModelForm пишем хинты для ввода  class SomeForm(forms.ModelForm):
+  class Meta:
+    model=FromModels
+    labels={"field_of_model":"hint_for_template"}
+# 4
+
+автор - modelChoiceField(queryset=Author.objects.all())
+
+* создаём объект  ModelName.objects.create(arg=item)
+
+# 5
+исправить view; только комментарий и автор
+делаем редирект
+
+# 6
+написать про товары если нет;
+по умолчанию в форме - то что уже и так в бд; редактирование - меняет бд.
+
+
