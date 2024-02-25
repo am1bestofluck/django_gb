@@ -6,3 +6,9 @@
     color: rgb(243, 210, 219);
     font-size: larger;
 }
+
+.rounded_button {
+    width: max-content;
+    border: 5px solid rgb(56, 48, 58);
+    border-radius: 10px;
+}

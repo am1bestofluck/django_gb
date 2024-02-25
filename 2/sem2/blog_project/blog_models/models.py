@@ -16,7 +16,7 @@ class Author(Model):
                                     - timedelta(weeks=4 * 12 * choice(range(5, 95))))
                            .date()
                            .strftime("%Y-%m-%d"))
-    full_name = CharField(max_length=200, blank=True, default="")
+    full_name = CharField(max_length=200, blank=True, default="",null=True)
 
     def save(self, *args, **kwargs):
         # https://www.geeksforgeeks.org/overriding-the-save-method-django-models/
