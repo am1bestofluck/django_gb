@@ -1,9 +1,11 @@
 import pdb
 from typing import Union, List
 from django.db.models import QuerySet
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import TemplateView, View, FormView, CreateView
 from .models import Author, Article, Comment
+from . import forms
 
 
 # Create your views here.
@@ -40,7 +42,7 @@ class GetAllCommentsOnArticle(TemplateView):
         context = super().get_context_data(**kwargs)
         # pdb.set_trace()
         art_id = kwargs['article_id']
-        article = get_object_or_404(Article,pk=art_id)
+        article = get_object_or_404(Article, pk=art_id)
         context['title']: str = f"Comments on '{article.title}'"
         context['details'] = dict()
         context['details']['title']: str = article.title
@@ -49,3 +51,53 @@ class GetAllCommentsOnArticle(TemplateView):
 
         # pdb.set_trace()
         return context
+
+
+# def new_author(request):
+#     # pdb.set_trace()
+#     if request.method == "POST":
+#         form = forms.Author_form(request.POST)
+#         pdb.set_trace()
+#         if form.is_valid():
+#             form.save()
+#         return redirect("new_author")
+#     else:
+#         form = forms.Author_form()
+#         return render(request, "blog_models/author_form.html", {"form": form})
+
+
+class NewAuthorView(View):
+    def get(self, request):
+        form = forms.Author_form()
+        return render(request, "blog_models/author_form.html", {"form": form})
+
+    def post(self, request):
+        form = forms.Author_form(request.POST)
+        pdb.set_trace()
+        if form.is_valid():
+            form.save()
+        return redirect("new_author")
+
+
+class NewArticleView(View):
+    def get(self, request):
+        form = forms.Article_form()
+        return render(request, "blog_models/author_form.html", {"form": form})
+
+    def post(self, request):
+        form = forms.Article_form(request.POST)
+        try:
+            form.is_valid()
+        except:
+            pdb.set_trace(header="почему??? почему здесь author это None!!!")
+        if form.is_valid():
+            new_article: Article = Article(title=form.cleaned_data['title'],
+                                           content=form.cleaned_data['content'],
+                                           publication_date=form.cleaned_data['publication_date'],
+                                           author=Author.objects.get(pk=int(form.data['author'])),
+                                           tags=form.cleaned_data['tags'],
+                                           isPublished=form.cleaned_data['isPublished'])
+            new_article.save()
+            return redirect("new_article")
+        else:
+            return HttpResponse(form.errors)
