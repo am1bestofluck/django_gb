@@ -86,5 +86,4 @@ class GamesFacade(FormView):
     def form_valid(self, form: MyForms.GameFacadeForm):
         context = {"title": f"Result of {form.cleaned_data['game_sort']} for {form.cleaned_data['repetitions']} times",
                    "out": form.parse_response()}
-        pdb.set_trace()
-        return super().form_valid(form)
+        return HttpResponse(str(context))

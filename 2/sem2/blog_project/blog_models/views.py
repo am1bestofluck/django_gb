@@ -1,9 +1,12 @@
 import pdb
+from datetime import date
 from typing import Union, List
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView, View, FormView, CreateView
+
+import models.models
 from .models import Author, Article, Comment
 from . import forms
 
@@ -79,7 +82,7 @@ class NewAuthorView(View):
         return redirect("new_author")
 
 
-class NewArticleView(View):
+class NewArticleView(GetAllCommentsOnArticle):
     def get(self, request):
         form = forms.Article_form()
         return render(request, "blog_models/author_form.html", {"form": form})
@@ -101,3 +104,48 @@ class NewArticleView(View):
             return redirect("new_article")
         else:
             return HttpResponse(form.errors)
+
+
+class GetAllCommentsOnArticle_withAppend(GetAllCommentsOnArticle):
+    template_name = "blog_models/all_comments_interactive.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = forms.Comment_form()
+        # pdb.set_trace()
+        return context
+
+    def post(self, request, article_id):
+        form = forms.Comment_form(request.POST)
+        # pdb.set_trace()
+        if form.is_valid():
+            new_comment = Comment(
+                author=Author.objects.get(pk=form.cleaned_data['author']),
+                article=Article.objects.get(pk=article_id),
+                content=form.cleaned_data['content'],
+                date_created=date.today(),
+                date_edited=None)
+            new_comment.save()
+        else:
+            print(form.errors)
+        # pdb.set_trace()
+        return redirect(f"new_comment", article_id=article_id)
+
+
+class EditWare(View):
+    template_name = "blog_models/edit_ware.html"
+
+    def get(self, request, ware_id):
+        ware = models.Ware.objects.get(pk=ware_id)
+        context = {f"verbose_title": "RW of  {ware}"}
+        context['form'] = forms.Ware_form()
+        context['ware_descr'] = ware
+        return render(request, self.template_name, context=context)
+
+    def put(self, request, ware_id):
+        form = forms.Ware_form(request.PUT)
+        if form.is_valid():
+            pdb.set_trace()
+        else:
+            return HttpResponse(form.errors)
+        return redirect("r_u_ware", ware_id=ware_id)

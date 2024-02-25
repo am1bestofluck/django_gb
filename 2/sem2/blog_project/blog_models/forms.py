@@ -20,3 +20,8 @@ class Article_form(forms.ModelForm):
                   'tags',
                   'isPublished', 'author', ]
         exclude = ['views']
+
+
+class Comment_form(forms.Form):
+    author = forms.IntegerField(min_value=1)
+    content = forms.CharField(widget=forms.Textarea(attrs={"cols": "80", "rows": "2"}))
