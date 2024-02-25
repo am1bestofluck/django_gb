@@ -1,6 +1,6 @@
 from django.db.models import (Model, CharField, EmailField, TextField,
                               DateField, DateTimeField, ForeignKey, CASCADE, IntegerField, DO_NOTHING, SET_NULL,
-                              DecimalField, ManyToManyField)
+                              DecimalField, ManyToManyField, ImageField)
 from datetime import datetime, timedelta, date
 from random import choice, choices, random
 from string import digits
@@ -34,9 +34,15 @@ class Ware(Model):
                          decimal_places=3, default=round(choice(range(1, 100_000)) + random(), 2))
     quantity = IntegerField(default=choice(range(100)))
     date_income = DateField(auto_now=True)
+    front_view = ImageField(null=True, help_text="front view",
+                            upload_to="")
 
     def __str__(self):
         return f"{self.__class__.__name__} #{self.pk}. {self.title}//{self.price}"
+
+    def full_description(self):
+        return [f"{self.title=}", f"{self.notes=}", f"{self.price=}", f"{self.quantity=}",
+                f"{self.date_income=}"]
 
 
 class Order(Model):
