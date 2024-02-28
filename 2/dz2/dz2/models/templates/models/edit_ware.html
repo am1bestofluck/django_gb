@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %} {{ verbose_title }} {% endblock %}
+{% block content %}
+<div class="ware">
+    <div class="ware__description">
+        {% for bullet in ware_descr %}
+        <div class="ware__description--bullet">{{ bullet }}</div>
+        {% endfor %}
+    </div>
+    <div class="view">
+        <img class="this_is_cruel" src="{{ img_path }}">
+    </div>
+</div>
+<br>
+
+<br>
+<form method="POST" class="form__ware" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="form_fields" value="EDIT">
+</form>
+{% endblock %}

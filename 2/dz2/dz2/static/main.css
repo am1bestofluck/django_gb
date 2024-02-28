@@ -37,3 +37,30 @@ h2 {
     text-align: center;
     font-size: larger;
 }
+
+.ware {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.ware__description {
+    display: flex;
+    flex-direction: column;
+}
+
+.this_is_cruel {
+    max-width: 30vw;
+    max-height: 20vh;
+}
+
+.form_fields {
+    border: "solid 2px rgb(55, 69, 98)";
+    border-radius: 10px;
+    background-color: rgb(55, 67, 108);
+}
+
+.form__ware {
+    padding: 20px;
+}
