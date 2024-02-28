@@ -13,7 +13,7 @@ class AuthorAdmin(admin.ModelAdmin):
     list_display.remove('bio')
     list_display_links = ['email']
     readonly_fields = ['full_name']
-    fieldsets = (('for full_name', {'fields': ['full_name'], 'classes': ['collapse'],
+    fieldsets = (('for full_name', {'fields': ['full_name','email'], 'classes': ['collapse'],
                                     'description': "That's hot and all, BUT WHERE DO I READ DOCS?"}),)
 
 
