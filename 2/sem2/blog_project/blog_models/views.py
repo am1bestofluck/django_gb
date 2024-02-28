@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView, View, FormView, CreateView
 
-import models.models
+# import models
 from .models import Author, Article, Comment
 from . import forms
 
@@ -132,4 +132,20 @@ class GetAllCommentsOnArticle_withAppend(GetAllCommentsOnArticle):
         return redirect(f"new_comment", article_id=article_id)
 
 
-
+# class EditWare(View):
+#     template_name = "blog_models/edit_ware.html"
+#
+#     def get(self, request, ware_id):
+#         ware = models.Ware.objects.get(pk=ware_id)
+#         context = {f"verbose_title": "RW of  {ware}"}
+#         context['form'] = forms.Ware_form()
+#         context['ware_descr'] = ware
+#         return render(request, self.template_name, context=context)
+#
+#     def put(self, request, ware_id):
+#         form = forms.Ware_form(request.PUT)
+#         if form.is_valid():
+#             pdb.set_trace()
+#         else:
+#             return HttpResponse(form.errors)
+#         return redirect("r_u_ware", ware_id=ware_id)
