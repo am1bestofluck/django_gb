@@ -14,8 +14,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import pdb
+
 from django.contrib import admin
 from django.urls import path, include
+from django.utils.translation import gettext_lazy
+from django.contrib.admin.sites import AdminSite
+from django.contrib.auth.forms import AuthenticationForm, forms
+
+secured_af = {"login": "ILook", "pw": "IntoYourEyes"}
+
+AdminSite.site_header = gettext_lazy(f'''login:'{secured_af["login"]}' pw:"{secured_af["pw"]}"''')
+AuthenticationForm.declared_fields['username'].initial = secured_af["login"]
+AuthenticationForm.declared_fields['password'].widget = forms.PasswordInput(
+    attrs={"autocomplete": "current-password", "value": secured_af["pw"]})
 
 urlpatterns = [
     path('admin/', admin.site.urls),

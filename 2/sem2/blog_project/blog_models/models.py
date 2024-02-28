@@ -1,3 +1,5 @@
+import pdb
+
 from django.db.models import (Model, CharField, EmailField, TextField,
                               DateField, DateTimeField, ForeignKey, CASCADE, IntegerField, DO_NOTHING, SET_NULL,
                               BooleanField, Field)
@@ -16,7 +18,7 @@ class Author(Model):
                                     - timedelta(weeks=4 * 12 * choice(range(5, 95))))
                            .date()
                            .strftime("%Y-%m-%d"))
-    full_name = CharField(max_length=200, blank=True, default="",null=True)
+    full_name = CharField(max_length=200, blank=True, default="", null=True)
 
     def save(self, *args, **kwargs):
         # https://www.geeksforgeeks.org/overriding-the-save-method-django-models/
@@ -30,6 +32,11 @@ class Author(Model):
         return self.pk >= other.pk
 
     def __eq__(self, other):
+        # pdb.set_trace()
+        if other is None:
+            return False
+        if not isinstance(other, Author):
+            return False
         return self.pk == other.pk
 
     def __lt__(self, other):
@@ -52,6 +59,8 @@ class Article(Model):
         return self.pk >= other.pk
 
     def __eq__(self, other):
+        if not isinstance(other, self.__class__):
+            return False
         return self.pk == other.pk
 
     def __lt__(self, other):
@@ -70,13 +79,16 @@ class Comment(Model):
     content = TextField(default=lorem_ipsum.words(count=20, common=False))
     date_created = DateTimeField(
         default=(datetime.now()
-                 - timedelta(weeks=4 * choice(range(1, 4)))).strftime("%Y-%m-%d %H:%M"))
+                 # - timedelta(weeks=4 * choice(range(1, 4)))).strftime("%Y-%m-%d %H:%M"))
+                 - timedelta(weeks=4 * choice(range(1, 4)))))  ##.strftime("%Y-%m-%d %H:%M"))
     date_edited = DateField(auto_now_add=True, null=True)
 
     def __ge__(self, other):
         return self.pk >= other.pk
 
     def __eq__(self, other):
+        if other is None:
+            return False
         return self.pk == other.pk
 
     def __lt__(self, other):
@@ -84,3 +96,7 @@ class Comment(Model):
 
     def __str__(self):
         return f"{self.__class__.__name__}(#{self.pk}) from {self.author.full_name} about {self.article.title}"
+
+    def __hash__(self):
+        """Что бы работало удаление из админки"""
+        return hash(str(self))
