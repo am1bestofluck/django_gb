@@ -52,7 +52,8 @@ class OrderLog(TemplateView):
 
 def index(request):
     # return redirect("order_log", customer_id=1)
-    return redirect("r_u_ware", ware_id=1)
+    # return redirect("r_u_ware", ware_id=1)
+    return redirect("admin/")
 
 
 class EditWare(View):
