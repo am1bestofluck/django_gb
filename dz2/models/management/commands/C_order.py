@@ -2,6 +2,7 @@ import pdb
 
 from django.core.management.base import BaseCommand
 from models.models import Client, Ware, Order
+from datetime import date
 
 
 class Command(BaseCommand):
@@ -20,7 +21,7 @@ class Command(BaseCommand):
         total = sum([i.price for i in wares_list])
         if None in wares_list:
             raise ValueError("не все товары опознаны")
-        order = Order(client=client, total=total)
+        order = Order(client=client, total=total, date_locked=date.today())
         order.save()
         for ware_ in wares_list:
             order.wares.add(ware_)
