@@ -31,7 +31,8 @@ DEBUG = False if os.getenv("DEBUG") == "False" else True
 ALLOWED_HOSTS = ["127.0.0.1",
                  "192.168.0.9",
                  'localhost',
-                 'https://am1bestofluck.pythonanywhere.com/']
+                 'https://am1bestofluck.pythonanywhere.com/',
+                 'am1bestofluck.pythonanywhere.com', ]
 
 # Application definition
 
