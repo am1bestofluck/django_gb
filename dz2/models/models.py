@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, date
 from random import choice, choices, random
 from string import digits
 from django.utils import lorem_ipsum
-
+import pdb
 
 # Create your models here.
 # клиент, товар и заказ.
@@ -48,8 +48,14 @@ class Ware(Model):
 class Order(Model):
     client = ForeignKey(Client, on_delete=DO_NOTHING)
     wares = ManyToManyField(Ware, default=[], blank=True)
-    total = IntegerField(default=0)  # формула тут, переопределить save.Но в тз не сказали.
+    total = DecimalField(default=0, decimal_places=2,
+                         max_digits=10)  # формула тут, переопределить save.Но в тз не сказали.
     date_locked = DateField()
 
     def __str__(self):
         return f"Order #{self.pk} from {self.date_locked}"
+
+    def save(self, *args, **kwargs):
+        self.total = None
+        pdb.set_trace()
+        super().save(*args, **kwargs)
