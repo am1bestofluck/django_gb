@@ -1,0 +1,49 @@
+1
+дополняем задание с монеткой 1сем
+делаем модель в классе models; булево- результат; датавремя
+потом миграцию делаем потом миграцию применяем
+можно создать все миграции через python manage.py makemigrations <имя - уточняет что именно переносить>
+посмотреть результат в бд
+2
+в модель добавить выборку из 5 последних бросков, просто функция
+статичная; тут они уже отсортированы, можно обратиться через индексы[n:]
+результат вернуть
+добавить view(представление) в котором вызывали только что созданный метод; аргументы - request и n
+принимаем аргумент для get:  path/<arg_name_from_function>
+нужно передать тип! path/<int:arg_name_from_function>
+делаем обратную сортировку  ModClName.objects.order_by('-FieldN')
+импортируем json-ответ   from django.httm import JsonResponse
+возвращаем json-ответ, с кирилицей  return JsonResponse(func(),json_dump_params={'ensure_ascii':False})
+3
+На первый взгляд понятно;
+создать новое приложение(блог)
+заполняем класс с полями; добавляем фунцию - склейку имени
+неочевидно! в какой точке запускается склейка имени?
+4
+внешний ключ _может_ совпадать со склеенной моделью
+во внешний ключ обязательно дать метод удаления on_delete={CASCADE}
+количеству просмотров даём "по умолчанию 0"
+models.BooleanField(default = False)
+рандомим вывод лорема lorem_ipsum.paragraph(5, common = False)
+5
+сначала делаем create для автора; создаём пару авторов;
+потом только crud для постов(4)
+пакет py опознается через файл __init__.py; можно не кликать в ui pycharm
+как импортируем в файл команд(management/command/comm_name.py) модель   from app_name.models import ModelName
+help в Command добавляем обязат
+джанго встроенный лорем     from django.utils import lorem_ipsum
+формат приемки даты в datefield     yyyy-mm-dd
+#### пример перезаписи save?
+create есть в семинаре
+read update delete сделать...
+6
+
+7
+автогенерация условия фильтра   ModClNm.objects.filter(otherModel__otherModelField__condition =fromKwargs ) #
+posts = Post.objects.filter(author__full_name__icontains=from_kwargs)
+вывод из команды    self.stdout.write(*posts)
+с stdout обережно, может всё похерить
+
+8 дз
+заказ.товар - многое ко многому
+связь многое ко многому создаёт отдельную  сводную таблицу

@@ -1,0 +1,22 @@
+class Author(Model):
+    name, surname = CharField(max_length=100), CharField(max_length=100)
+    email = EmailField()
+    bio = TextField()
+    birt_date = ((datetime.now()
+                  - timedelta(weeks=4 * 12 * choice(range(5, 95))))
+                 .date()
+                 .strftime("%Y-%m-%d"))
+    full_name = CharField(max_length=200,default_value="not set")
+
+    def save(self, *args, **kwargs):
+        # поле нужно объявить!!!
+        # https://www.geeksforgeeks.org/overriding-the-save-method-django-models/
+        self.full_name = f"{self.name} {self.surname}"
+        super(Author, self).save(*args, **kwargs)
+
+
+django в commands использует argparse
+https://docs.python.org/3/library/argparse.html#nargs
+как задаются опциональные/ключевые аргументы в консоли для argparse  --arg1 --arg2
+argparse.ArgumentParser().add_argument, что означают параметр action     что делать если в аргументах встретился этот ключевой аргумент
+argparse.ArgumentParser().add_argument("--arg3", action="store_true"|"store_false")? встретив этот ключ в аргументах - присваиваем булево

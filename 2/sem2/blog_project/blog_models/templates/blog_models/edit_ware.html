@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %} verbose_title {% endblock %}
+{% block content %}
+{{ ware_descr }}
+<br>
+<form method="post">
+    {% csrf_token %}
+    {{form.as_t}}
+    <input type="submit" value="EDIT">
+</form>
+{% endblock %}
