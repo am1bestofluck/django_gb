@@ -7,6 +7,7 @@ from string import digits
 from django.utils import lorem_ipsum
 import pdb
 
+
 # Create your models here.
 # клиент, товар и заказ.
 
@@ -58,5 +59,6 @@ class Order(Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.total = 0
-        pdb.set_trace()
+        for position in self.wares.values():
+            self.total += position['price']
         super().save(*args, **kwargs)
