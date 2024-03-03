@@ -56,6 +56,7 @@ class Order(Model):
         return f"Order #{self.pk} from {self.date_locked}"
 
     def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
         self.total = None
         pdb.set_trace()
         super().save(*args, **kwargs)
