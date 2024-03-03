@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 import pdb
 from pathlib import Path
-from dotenv import  load_dotenv
+from dotenv import load_dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
@@ -21,14 +22,16 @@ load_dotenv()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-(zykqx+k$0#%bvog_bp$szh$swai9=s0mjv150b-752fz@bf(b'
-
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 # SECURITY WARNING: don't run with debug turned on in production!
 pdb.set_trace()
 DEBUG = False if os.getenv("DEBUG") == "False" else True
 
 ALLOWED_HOSTS = ["127.0.0.1",
                  "192.168.0.9",
-                 'localhost']
+                 'localhost',
+                 'https://am1bestofluck.pythonanywhere.com/']
 
 # Application definition
 
@@ -78,7 +81,7 @@ WSGI_APPLICATION = 'dz2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv("MYSQL_DBNAME"),# ЭТО вабщеск тотал!
+        'NAME': os.getenv("MYSQL_DBNAME"),  # ЭТО вабщеск тотал!
         'USER': os.getenv("MYSQL_USER"),
         'PASSWORD': os.getenv("MYSQL_PASSWORD"),
         'HOST': os.getenv("MYSQL_HOST"),
