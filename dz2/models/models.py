@@ -57,6 +57,6 @@ class Order(Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        self.total = None
+        self.total = 0
         pdb.set_trace()
         super().save(*args, **kwargs)
