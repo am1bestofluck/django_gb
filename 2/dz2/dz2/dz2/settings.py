@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
-import pdb
+# import pdb
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-(zykqx+k$0#%bvog_bp$szh$swai9=s0mjv150b-752fz@bf(b
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 # SECURITY WARNING: don't run with debug turned on in production!
-pdb.set_trace()
+# pdb.set_trace()
 DEBUG = False if os.getenv("DEBUG") == "False" else True
 
 ALLOWED_HOSTS = ["127.0.0.1",
